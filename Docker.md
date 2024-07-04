@@ -164,6 +164,18 @@ Nota: En estos archivos es muy importante el indentado.
 
 mongodb:nombreDelContenedor:puerto/BBDD
 
+
+   volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ubicación del archivo q queremos copiar : ubicación dentro del contenedor del archivo q queremos copiar (ruta absoluta)
+      o bien un volumen del propio docker
+      -  nombre volumen : ubicación del contenido del volumen, en el contenedor
+
+
+    depends_on:
+        - servicio q debe estar iniciado antes de iniciarse el q contiene esta propiedad
+        - pueden ser varios
+
 ## Comunicación entre servicios en una misma red de docker usando HTTP requests
 
 
@@ -172,3 +184,5 @@ mongodb:nombreDelContenedor:puerto/BBDD
 Consiste en crear un contenedor, q contenga un servidor web, q es el q recibe las llamadas desde el exterior, y este es el q se comunica con los servicios q están en la red de docker
 
 
+En el archivo de configuración de nginx podemos llamar directamente al puerto q tiene a la escucha el servidor express, no es necesario llamar al puerto q exponemos.
+Es más, si montamos un servidor proxy, podemos no exponer ningún puerto... en los servicios...
