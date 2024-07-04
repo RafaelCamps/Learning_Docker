@@ -5,17 +5,17 @@ import Book from "../models/BookModel.js";
 
 const initialBooks = [
     { 
-        id: 1,
+        bookId: 1,
         title: "1984",
         author: "George Orwell"
     },
     { 
-        id: 2,
+        bookId: 2,
         title: "A brave new world",
         author: "Aldous Huxley"
     },
     { 
-        id: 3,
+        bookId: 3,
         title: "The catcher in the rye",
         author: "J.D. Salinger"
     },

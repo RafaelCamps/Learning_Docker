@@ -110,7 +110,7 @@ En este archivo declararemos los servicios (contenedores) que compondrán nuestr
 
 services:
     book-service:  //Nombre del servicio
-        build: ./book-service   //Donde está el código fuente para crear este servicio/contenedor
+        build: ./book-service   //Donde está el código fuente para crear este servicio/contenedor en esta ubicación se buscará un archivo Dockerfile
         image: book-service:latest  //Q imagen debemos usar para este servicio
         container_name: bookService  //Nombre q docker asignará a este contenedor
         ports:
@@ -130,7 +130,21 @@ services:
             - app-network
         volumes:
             - mongo-data:/data/db  #crea un volumen para la persistencia de datos, en la máquina, fuera del contenedor de docker
-        
+    
+    # para conectar varios servicios mediante http requests, lo mejor es poner en las variables de entorno una referencia al nombre del servicio, así no tendremos problemas si cambia de ip
+    loan-service:
+        build: ./loan-service
+        image: loan-service:latest
+        ports: 
+            - 5000:3001
+        networks: # todos los contenedores q queremos q se puedan conectar entre sí, deben estar en la misma red.
+            - app-network
+        environment:
+            - BOOK_SERVICE_URL=http://book-service:3000
+
+
+
+
 # hay q especificarle a docker q volúmenes para persistencia de datos, queremos crear    
 volumes:
     mongo-data:
@@ -151,5 +165,10 @@ Nota: En estos archivos es muy importante el indentado.
 mongodb:nombreDelContenedor:puerto/BBDD
 
 ## Comunicación entre servicios en una misma red de docker usando HTTP requests
+
+
+## Crear un reverse PROXY 
+
+Consiste en crear un contenedor, q contenga un servidor web, q es el q recibe las llamadas desde el exterior, y este es el q se comunica con los servicios q están en la red de docker
 
 

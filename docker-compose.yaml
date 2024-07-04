@@ -22,6 +22,16 @@ services:
     volumes:
       - mongo-data:/data/db
   
+  loan-service:
+    build: ./loan-service
+    image: loan-service:latest
+    ports: 
+      - 5000:3001
+    networks: 
+      - app-network
+    environment:
+      - BOOK_SERVICE_URL=http://book-service:3000
+
 volumes:
   mongo-data:
 
